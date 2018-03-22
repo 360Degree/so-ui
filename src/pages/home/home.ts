@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { AttendancePage } from '../attendance/attendance';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -22,7 +24,7 @@ export class HomePage {
   }
 
   attendance(){
-    alert("success");
+    this.navCtrl.push(AttendancePage);
   }
 
  
