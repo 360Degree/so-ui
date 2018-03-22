@@ -1,32 +1,22 @@
 import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
 
 import { AttendancePage } from '../attendance/attendance';
+import { ExpensePage } from '../expense/expense';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  providers:[Geolocation]
+  templateUrl: 'home.html'
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController ,public geolocation:Geolocation) {
-
-    this.geolocation.getCurrentPosition().then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
-     }).catch((error) => {
-       console.log('Error getting location', error);
-       
-     });
-  
-  }
+  constructor(public navCtrl: NavController) {}
 
   attendance(){
     this.navCtrl.push(AttendancePage);
   }
 
- 
-
+  currentVisit(){
+    this.navCtrl.push(ExpensePage);
+  }
 }

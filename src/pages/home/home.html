@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title text-center>
      Smart Office
     </ion-title>
   </ion-navbar>
@@ -12,7 +12,7 @@
     <div class="card-title">Attendance</div>
     <div class="card-subtitle">Click here to Checkin/Checkout</div>
   </ion-card>
-  <ion-card>
+  <ion-card (click)="currentVisit()">
     <img src="assets/imgs/card-amsterdam.png"/>
     <div class="card-title">Current Visit</div>
     <div class="card-subtitle">To check current consignment</div>

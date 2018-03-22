@@ -1,22 +1,23 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>
+        <ion-title text-center>
         Attendance
         </ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content>
+    <div #map id="map"></div> 
     <ion-list>
-        <ion-item-sliding #item>
-            <ion-item text-center>
-                Swipe right to checkin/ left to checkout
-            </ion-item>
-            <ion-item-options side="left" (ionSwipe)="checkin()">
-            </ion-item-options>
-            <ion-item-options side="right" (ionSwipe)="checkout()">
-            </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-
-
+        <ion-card>
+            <ion-item-sliding #item>
+                <ion-item text-center>
+                    Swipe right to checkin/ left to checkout
+                </ion-item>
+                <ion-item-options side="left" (ionSwipe)="checkin()">
+                </ion-item-options>
+                <ion-item-options side="right" (ionSwipe)="checkout()">
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-card>
+    </ion-list>
 </ion-content>
