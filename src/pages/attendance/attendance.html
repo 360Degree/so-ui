@@ -6,7 +6,9 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <div #map id="map"></div> 
+    <agm-map [latitude]=latitude [longitude]=longitude>
+        <agm-marker [latitude]=latitude [longitude]=longitude></agm-marker>
+    </agm-map>
     <ion-list>
         <ion-card>
             <ion-item-sliding #item>
@@ -19,5 +21,25 @@
                 </ion-item-options>
             </ion-item-sliding>
         </ion-card>
+        <ion-card>
+            <ion-card-header>
+                Attendance Details
+            </ion-card-header>
+            <ion-card-content >
+                <ion-item>
+                    <ion-label col-4 >Check In Time</ion-label>
+                    <ion-label col-8 >{{checkinTime}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label col-4>Check out Time</ion-label>
+                    <ion-label col-8 >{{checkoutTime}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label col-4>Total Duration</ion-label>
+                    <ion-label col-8>{{countDown | async | formatTime}}</ion-label>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
     </ion-list>
+   
 </ion-content>

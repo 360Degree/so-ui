@@ -1,27 +1,53 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
-declare var google;
+import { TimerService } from '../../services/timer.service';
+
+import {Observable} from 'rxjs/Observable'
+import 'rxjs/add/observable/timer'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/take'
+
 
 @Component({
     selector: 'page-attendance',
     templateUrl: 'attendance.html'
 })
 
-export class AttendancePage{
+export class AttendancePage implements OnInit{
+    public latitude: number;
+    public longitude: number;
+    public currentTime: string;
+    public checkinTime: string;
+    public checkoutTime: string;
+    public countDown: any;
 
-    @ViewChild('map') mapElement: ElementRef;
-    map:any;
+    public counter : number=1;
+    public counter1 : number=86400; 
+   
 
-    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public geolocation: Geolocation){}
+    constructor(public navCtrl: NavController, 
+                public toastCtrl: ToastController, 
+                public geolocation: Geolocation,
+                public timerService: TimerService){}
 
+    getCurrentTime(){
+        let date=new Date();
+        let hours=date.getHours();
+        let minutes=date.getMinutes();
+        let seconds=date.getSeconds();
+        return this.currentTime=hours+' : '+minutes+' : '+seconds;
+    }
+    
     checkin(){
+        this.checkinTime=this.getCurrentTime();
+        this.startCounter();
         let toast = this.toastCtrl.create({
             message: 'Your attendance has been checked In',
-            duration: 3000,
+            duration: 2000,
             position: 'bottom'
         });
 
@@ -29,12 +55,15 @@ export class AttendancePage{
           
         });
         toast.present();
+
     }
 
     checkout(){
+        this.checkoutTime =this.getCurrentTime();
+        //this.stopCounter();
         let toast = this.toastCtrl.create({
             message: 'Attendance Checked out ',
-            duration: 3000,
+            duration: 2000,
             position: 'bottom'
         });
 
@@ -44,44 +73,28 @@ export class AttendancePage{
         toast.present();
     }
 
-    ionViewDidLoad(){
+    ngOnInit(){
         this.loadMap();
     }
      
     loadMap(){
         this.geolocation.getCurrentPosition().then((position) => {
-            let latLng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude,{maximumAge:60000, timeout:5000, enableHighAccuracy:true});
-            let mapOptions = {
-                center: latLng,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            }
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-            let marker = new google.maps.Marker({
-                map: this.map,
-                animation: google.maps.Animation.DROP,
-                position: this.map.getCenter()
-              });
-             
-            let content = "<h4>Information!</h4>";         
-            
-            this.addInfoWindow(marker, content);
-
+            this.latitude=position.coords.latitude;
+            this.longitude=position.coords.longitude;
         },(err) => {
             console.log(err);
         });
     }
 
-    addInfoWindow(marker, content){
- 
-        let infoWindow = new google.maps.InfoWindow({
-          content: content
-        });
+    startCounter(){
+        this.countDown=Observable.timer(0,1000).take(this.counter1).map(() => ++this.counter);
+    }
+
+    stopCounter(){
+     this.countDown.unsubscribe();
+    }
        
-        google.maps.event.addListener(marker, 'click', () => {
-          infoWindow.open(this.map, marker);
-        });
-       
-      }
+    
+    
+    
 }
