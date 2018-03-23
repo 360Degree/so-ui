@@ -9,6 +9,7 @@ import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 import { MyApp } from './app.component';
 
@@ -51,6 +52,7 @@ import { ExpensePage } from '../pages/expense/expense';
     File,
     FileOpener,
     Diagnostic,
+    ImagePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
